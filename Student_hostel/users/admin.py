@@ -1,8 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomAuthenticationForm
 from .models import User
+from django.contrib.auth.models import Group
+
+
+class CustomAdminSite(admin.AdminSite):
+    login_form = CustomAuthenticationForm
+
+
+admin_site = CustomAdminSite(name="myadmin")
 
 
 class CustomUserAdmin(UserAdmin):
@@ -27,4 +34,5 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('index_number', 'email',)
 
 
-admin.site.register(User, CustomUserAdmin)
+admin_site.register(User, CustomUserAdmin)
+admin_site.register(Group)

@@ -2,6 +2,17 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 
 
+def normalize_index_number(index: str) -> str:
+    try:
+        index_number = index.lower()
+    except Exception:
+        raise ValueError(_('Invalid Index Number'))
+    if (index_number.startswith("bs") and len(index_number) == 11):
+        return index_number
+    else:
+        raise ValueError(_('Invalid Index Number'))
+
+
 class UserManager(BaseUserManager):
 
     def normalize_index_number(self, index: str) -> str:

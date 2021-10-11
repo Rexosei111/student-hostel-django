@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from hostels import urls as hostel_urls
 from users import urls as user_urls
+from users.admin import admin_site
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('hostels/', include("hostels.urls")),
     path('students/', include("users.urls"))
 ]
