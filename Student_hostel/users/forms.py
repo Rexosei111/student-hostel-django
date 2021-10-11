@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from .models import User
-from .managers import normalize_index_number
+from .utils import normalize_index_number
 
 
 class CustomUserCreationForm(UserCreationForm):

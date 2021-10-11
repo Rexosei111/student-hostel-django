@@ -1,34 +1,14 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-
-
-def normalize_index_number(index: str) -> str:
-    try:
-        index_number = index.lower()
-    except Exception:
-        raise ValueError(_('Invalid Index Number'))
-    if (index_number.startswith("bs") and len(index_number) == 11):
-        return index_number
-    else:
-        raise ValueError(_('Invalid Index Number'))
+from .utils import normalize_index_number
 
 
 class UserManager(BaseUserManager):
 
-    def normalize_index_number(self, index: str) -> str:
-        try:
-            index_number = index.lower()
-        except Exception:
-            raise ValueError(_('Invalid Index Number'))
-        if (index_number.startswith("bs") and len(index_number) == 11):
-            return index_number
-        else:
-            raise ValueError(_('Invalid Index Number'))
-
     def create_user(self, index_number, email, password, **extra_fields):
         if not index_number:
             raise ValueError(_('Index Number must be set'))
-        index_number = self.normalize_index_number(index_number)
+        index_number = normalize_index_number(index_number)
         email = self.normalize_email(email)
         user = self.model(index_number=index_number,
                           email=email, **extra_fields)
