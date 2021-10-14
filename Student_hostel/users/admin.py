@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomAuthenticationForm
-from .models import (User, Owner, Hostel)
+from .models import (User, Owner, Hostel, Room)
 from django.contrib.auth.models import Group
 
 
 class CustomAdminSite(admin.AdminSite):
     login_form = CustomAuthenticationForm
+    site_header = "Student hostel"
 
 
 admin_site = CustomAdminSite(name="myadmin")
@@ -23,14 +24,14 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('index_number', 'email',
          'password', 'first_name', 'last_name', 'groups')}),
+        ("Hostel Info", {'fields': ('hostel_name', 'room_number')}),
         ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active')}),
     )
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('index_number', 'email', 'password1', 'password2', 'groups',
-                       'first_name', 'last_name', 'is_superuser', 'is_staff', 'is_active')}
-         ),
+        (None, {'classes': ('wide'), 'fields': ('index_number', 'email',
+         'password', 'first_name', 'last_name', 'groups')}),
+        ("Hostel Info", {'fields': ('hostel_name', 'room_number')}),
+        ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active')}),
     )
     search_fields = ('index_number', 'email',)
     ordering = ('index_number', 'email',)
@@ -40,3 +41,4 @@ admin_site.register(User, CustomUserAdmin)
 admin_site.register(Group)
 admin_site.register(Owner)
 admin_site.register(Hostel)
+admin_site.register(Room)
