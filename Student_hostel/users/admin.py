@@ -1,16 +1,8 @@
-from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomAuthenticationForm
-from .models import (User, Owner, Hostel, Room)
+from .models import (User)
 from django.contrib.auth.models import Group
-
-
-class CustomAdminSite(admin.AdminSite):
-    login_form = CustomAuthenticationForm
-    site_header = "Student hostel"
-
-
-admin_site = CustomAdminSite(name="myadmin")
+from hostels.admin import admin_site
 
 
 class CustomUserAdmin(UserAdmin):
@@ -23,13 +15,13 @@ class CustomUserAdmin(UserAdmin):
                    'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('index_number', 'email',
-         'password', 'first_name', 'last_name', 'groups')}),
+         'password', 'first_name', 'last_name')}),
         ("Hostel Info", {'fields': ('hostel_name', 'room_number')}),
         ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active')}),
     )
     add_fieldsets = (
         (None, {'classes': ('wide'), 'fields': ('index_number', 'email',
-         'password', 'first_name', 'last_name', 'groups')}),
+         'password1', 'password2', 'first_name', 'last_name', 'phone_number', 'groups')}),
         ("Hostel Info", {'fields': ('hostel_name', 'room_number')}),
         ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active')}),
     )
@@ -38,7 +30,3 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin_site.register(User, CustomUserAdmin)
-admin_site.register(Group)
-admin_site.register(Owner)
-admin_site.register(Hostel)
-admin_site.register(Room)

@@ -1,38 +1,23 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 from .models import User
-from .utils import normalize_index_number
+from django.conf import settings
 
 
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
-        model = User
-        fields = ('index_number', 'email',)
-
-    def save(self, commit=True):
-        user = super(CustomUserCreationForm, self).save(commit=False)
-        user.index_number = normalize_index_number(
-            self.cleaned_data['index_number'])
-        if commit:
-            user.save()
-        return user
+        model = get_user_model()
+        fields = '__all__'
 
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
-        model = User
-        fields = ('index_number', 'email',)
-
-    def save(self, commit=True):
-        user = super(CustomUserChangeForm, self).save(commit=False)
-        user.index_number = normalize_index_number(
-            self.cleaned_data['index_number'])
-        if commit:
-            user.save()
-        return user
+        model = get_user_model()
+        fields = '__all__'
 
 
 class CustomAuthenticationForm(AuthenticationForm):

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from hostels import urls as hostel_urls
 from users import urls as user_urls
-from users.admin import admin_site
+from hostels.admin import admin_site
 
 urlpatterns = [
     path('admin/', admin_site.urls),
